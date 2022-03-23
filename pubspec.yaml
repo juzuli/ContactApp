@@ -33,6 +33,7 @@ dependencies:
   firebase_auth:
   firebase_core:
   http:
+  logger: ^1.1.0
   flutter:
     sdk: flutter
   email_validator: ^2.0.1
