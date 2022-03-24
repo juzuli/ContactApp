@@ -10,3 +10,18 @@ var logger = Logger(
     printTime: false, // Should each log print contain a timestamp
   ),
 );
+showInfoMessage(String message) {
+  logger.i(message);
+}
+
+showWarningMessage(String message) {
+  logger.w(message);
+}
+
+showErrorMessage(String message) {
+  logger.e(message);
+}
+
+showTerribleMessage(String message) {
+  logger.wtf(message);
+}
