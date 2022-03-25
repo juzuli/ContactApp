@@ -1,5 +1,7 @@
+import 'package:contact_app/src/bloc/authentication/authentication_cubit.dart';
+import 'package:contact_app/src/bloc/authentication/authentication_repository.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'pages/login_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,13 +9,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Contact App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => AuthenticationCubit(AuthRepository()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Contact App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const LoginPage(),
       ),
-      home: const LoginPage(),
     );
   }
 }
