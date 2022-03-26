@@ -8,17 +8,16 @@ part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   final AuthRepository _authenticationRepository;
-  AuthenticationCubit(this._authenticationRepository)
-      : super(AuthenticationInitial());
+  AuthenticationCubit(this._authenticationRepository) : super(AuthenticationInitial());
   loginWithEmailPassword(String email, String password) async {
     emit(AuthenticationLoading());
     try {
       UserCredential userCredential = await _authenticationRepository
           .loginWithEmailPassword(email, password);
-      if (userCredential != null) {
-        emit(AuthenticationSuccess(userCredential));
-      } else {
+      if (userCredential == null) {
         emit(AuthenticationLoadError());
+      } else {
+        emit(AuthenticationSuccess(userCredential));
       }
     } catch (ex) {
       //  showErrorMessage(ex.toString());
@@ -26,16 +25,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  registerWithEmailPassword(
-      String name, String email, String password, String mobno) async {
+  registerWithEmailPassword(String email, String password,) async {
     emit(AuthenticationLoading());
     try {
       UserCredential userCredential = await _authenticationRepository
-          .registerWithEmailPassword(name, email, password, mobno);
+          .registerWithEmailPassword(email, password);
       if (userCredential == null) {
-        emit(AuthenticationSuccess(userCredential));
-      } else {
         emit(AuthenticationLoadError());
+      } else {
+        emit(AuthenticationSuccess(userCredential));
       }
     } catch (ex) {
       //showErrorMessage(ex.toString());

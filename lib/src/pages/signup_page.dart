@@ -1,6 +1,9 @@
+import 'package:contact_app/src/bloc/authentication/authentication_cubit.dart';
 import 'package:contact_app/src/pages/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants/strings.dart';
 
@@ -16,12 +19,14 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   final _passwordFieldKey = GlobalKey<FormFieldState<String>>();
   final RegExp phoneRegex = RegExp(r'^[6-9]\d{9}$');
-  final RegExp emailRegex = RegExp( r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+  final RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +35,10 @@ class _SignupPageState extends State<SignupPage> {
         title: const Text('Create a new account'),
       ),
       body: Form(
-        key: _formKey,
+          key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -47,11 +52,10 @@ class _SignupPageState extends State<SignupPage> {
                       hintText: Strings.enterYourName,
                     ),
                     inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                    validator: (value){
-                      if(value==null || value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return 'Please enter name';
-                      }
-                      else{
+                      } else {
                         return null;
                       }
                     },
@@ -65,14 +69,14 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: Strings.email,
                       hintText: Strings.enterYourEmail,
                     ),
-                    validator: (value){
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return 'Please enter email';
                       }
                       if (emailRegex.hasMatch(value)) {
-                        return 'Please enter valid email';
+                        return null;
                       }
-                      return null;
+                      return 'Please enter valid email';
                     },
                   ),
                   const SizedBox(height: 30.0),
@@ -88,14 +92,14 @@ class _SignupPageState extends State<SignupPage> {
                       FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*$')),
                       LengthLimitingTextInputFormatter(10)
                     ],
-                    validator: (value){
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return 'Please enter phone number';
                       }
-                      if(phoneRegex.hasMatch(value)){
-                        return 'Please enter valid phone number';
+                      if (phoneRegex.hasMatch(value)) {
+                        return null;
                       }
-                      return null;
+                      return "Please enter a valid phone number";
                     },
                   ),
                   const SizedBox(height: 30.0),
@@ -108,8 +112,8 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: Strings.password,
                       hintText: Strings.enterYourPassword,
                     ),
-                    validator: (value){
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return 'Please enter password';
                       }
                       return null;
@@ -124,37 +128,51 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: Strings.conformPassword,
                       hintText: Strings.enterYourConformPassword,
                     ),
-                    validator: (value){
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return 'Password is required';
                       }
-                      if(value!=_passwordFieldKey.currentState!.value){
+                      if (value != _passwordFieldKey.currentState!.value) {
                         return 'Password do not match';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 15.0),
-                  ElevatedButton(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                      child: Text(
-                        Strings.register.toUpperCase(),
-                        style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                    onPressed: () {
-                      if(_formKey.currentState!.validate()){
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => const DashboardPage()));
-                      }else{
-                        print('Error');
-                      }
-                    },
-                  ),
+                  BlocConsumer<AuthenticationCubit, AuthenticationState>(
+                      listener: (context, state) {
+                    if (state is AuthenticationSuccess) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DashboardPage()));
+                    } else if (state is AuthenticationLoadError) {
+                      Fluttertoast.showToast(msg: "Sign_up failed");
+                    }
+                  }, builder: (context, state) {
+                    if (state is AuthenticationLoading) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return ElevatedButton(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                          child: Text(
+                            Strings.register.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          String email = _emailController.text.trim();
+                          String password = _passwordController.text.trim();
+                          BlocProvider.of<AuthenticationCubit>(context)
+                              .registerWithEmailPassword(email, password);
+                        },
+                      );
+                    }
+                  }),
                 ],
               ),
             ),
