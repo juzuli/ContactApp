@@ -12,9 +12,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 50),
+        const Padding(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 50),
           child: CircleAvatar(
             radius: 80,
             backgroundColor: Colors.blueGrey,

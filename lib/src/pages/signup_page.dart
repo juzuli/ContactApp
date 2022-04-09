@@ -151,7 +151,7 @@ class _SignupPageState extends State<SignupPage> {
                     }
                   }, builder: (context, state) {
                     if (state is AuthenticationLoading) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else {
                       return ElevatedButton(
                         child: Padding(
