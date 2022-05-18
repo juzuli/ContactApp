@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Contact App',
         theme: ThemeData(
+          fontFamily: 'OpenSans',
           primarySwatch: Colors.blue,
         ),
         home: const LoginPage(),
