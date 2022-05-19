@@ -15,7 +15,7 @@ class _IndividualPageState extends State<IndividualPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white60,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         leadingWidth: 65,
         leading: InkWell(
@@ -112,6 +112,10 @@ class _IndividualPageState extends State<IndividualPage> {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
+            Image.asset('assets/images/background-white.jpg',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
             ListView(),
             Align(
               alignment: Alignment.bottomCenter,

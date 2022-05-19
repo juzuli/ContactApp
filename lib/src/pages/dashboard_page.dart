@@ -1,5 +1,5 @@
 import 'package:contact_app/src/pages/chat_page.dart';
-import 'package:contact_app/src/pages/home_page.dart';
+import 'package:contact_app/src/pages/contact_page.dart';
 import 'package:contact_app/src/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   int selectedIndex = 0;
   List<Widget> bodyFragments = [
-    const HomePage(),
+    const ContactPage(),
     const ChatPage(),
     const ProfilePage(),
   ];
