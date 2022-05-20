@@ -1,5 +1,5 @@
 import 'package:contact_app/src/model/chat_model.dart';
-import 'package:contact_app/src/pages/individual_page.dart';
+import 'package:contact_app/src/pages/individual_chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,7 +19,7 @@ class ChatCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => IndividualPage(chatModel: chatModel,)),
+              MaterialPageRoute(builder: (context) => IndividualChatPage(chatModel: chatModel,)),
             );
           },
           leading: CircleAvatar(
