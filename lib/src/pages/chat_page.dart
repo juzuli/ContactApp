@@ -1,4 +1,4 @@
-import 'package:contact_app/src/custom_ui/custom_chat_card.dart';
+import 'package:contact_app/src/custom_ui/chat_card.dart';
 import 'package:contact_app/src/model/chat_model.dart';
 import 'package:contact_app/src/pages/custom_search_delegate.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +54,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 10,
-        title: const Text('Chats'),
+        title: const Text('Chats',
+          style: TextStyle(
+            fontWeight: FontWeight.bold
+          ),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -72,7 +75,7 @@ class _ChatPageState extends State<ChatPage> {
       body: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (context, index) {
-          return CustomChatCard(chatModel: chats[index],);
+          return ChatCard(chatModel: chats[index],);
         },
       ),
     );

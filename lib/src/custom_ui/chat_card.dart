@@ -3,8 +3,8 @@ import 'package:contact_app/src/pages/individual_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomChatCard extends StatelessWidget {
-  const CustomChatCard({
+class ChatCard extends StatelessWidget {
+  const ChatCard({
     Key? key,
     this.chatModel,
   }) : super(key: key);
