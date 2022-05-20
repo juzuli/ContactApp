@@ -15,7 +15,7 @@ class _IndividualPageState extends State<IndividualPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white60,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         leadingWidth: 65,
         leading: InkWell(
@@ -46,6 +46,7 @@ class _IndividualPageState extends State<IndividualPage> {
         title: InkWell(
           onTap: () {},
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -111,17 +112,21 @@ class _IndividualPageState extends State<IndividualPage> {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
+            Image.asset('assets/images/background-white.jpg',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
             ListView(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width - 55,
+                    width: MediaQuery.of(context).size.width - 60,
                     child: Card(
                       margin: const EdgeInsets.only(
-                        left: 2,
-                        right: 2,
+                        left: 4,
+                        right: 4,
                         bottom: 8,
                       ),
                       shape: RoundedRectangleBorder(
@@ -130,22 +135,109 @@ class _IndividualPageState extends State<IndividualPage> {
                       child: TextFormField(
                         textAlignVertical: TextAlignVertical.center,
                         keyboardType: TextInputType.multiline,
+                        maxLines: 5,
+                        minLines: 1,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           contentPadding: const EdgeInsets.all(5),
                           hintText: 'Type a message',
                           prefixIcon: IconButton(
-                              onPressed: (){},
-                              icon: const Icon(Icons.emoji_emotions)),
+                            onPressed: () {},
+                            icon: const Icon(Icons.emoji_emotions),
+                          ),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (builder) {
+                                        return bottomSheet();
+                                      });
+                                },
+                                icon: const Icon(Icons.attach_file),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.camera_alt),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const CircleAvatar()
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8, left: 2),
+                    child: CircleAvatar(
+                      radius: 25,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.mic),
+                      ),
+                    ),
+                  )
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
+    return SizedBox(
+      height: 278,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        margin: const EdgeInsets.all(18),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 40,
+            runSpacing: 25,
+            children: [
+              iconCreation(Icons.insert_drive_file, Colors.indigo, 'Document'),
+              iconCreation(Icons.camera_alt, Colors.pink, 'Camera'),
+              iconCreation(Icons.insert_photo, Colors.purple, 'Gallery'),
+              iconCreation(Icons.headset, Colors.deepOrange, 'Audio'),
+              iconCreation(Icons.location_pin, Colors.green, 'Location'),
+              iconCreation(Icons.person, Colors.blue, 'Contact'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget iconCreation(
+    IconData icon,
+    Color color,
+    String text,
+  ) {
+    return InkWell(
+      onTap: (){},
+      child: Column(
+        children: [
+          CircleAvatar(
+            backgroundColor: color,
+            radius: 30,
+            child: Icon(icon),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }
