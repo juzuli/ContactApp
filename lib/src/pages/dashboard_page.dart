@@ -1,3 +1,4 @@
+import 'package:contact_app/src/pages/camera_screen.dart';
 import 'package:contact_app/src/pages/chat_page.dart';
 import 'package:contact_app/src/pages/home_page.dart';
 import 'package:contact_app/src/pages/profile_page.dart';
@@ -11,8 +12,9 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
   List<Widget> bodyFragments = [
+    const CameraScreen(),
     const HomePage(),
     const ChatPage(),
     const ProfilePage(),
@@ -23,7 +25,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       body: bodyFragments[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         currentIndex: selectedIndex,
         onTap: (value) {
           setState(() {
@@ -31,6 +33,11 @@ class _DashboardPageState extends State<DashboardPage> {
           });
         },
         items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.camera_alt_outlined,
+              ),
+              label: 'Camera'
+          ),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -45,6 +52,7 @@ class _DashboardPageState extends State<DashboardPage> {
               icon: Icon(Icons.account_circle_outlined),
               backgroundColor: Colors.black,
               label: "Profile"),
+
         ],
       ),
     );
