@@ -130,7 +130,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                   height: MediaQuery.of(context).size.height-180,
                   child: ListView(
                     shrinkWrap: true,
-                    children: [
+                    children: const [
                       OwnMessageCard(),
                       ReplyCard(),
                       OwnMessageCard(),

@@ -17,32 +17,32 @@ class CameraView extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.crop,
                 color: Colors.white,
               )),
           IconButton(
-              onPressed: () {}, icon: Icon(Icons.emoji_emotions_outlined)),
+              onPressed: () {}, icon: const Icon(Icons.emoji_emotions_outlined)),
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.title,
                 color: Colors.white,
               )),
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit,
                 color: Colors.white,
               )),
         ],
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 150,
               child: Image.file(

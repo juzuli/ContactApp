@@ -23,8 +23,8 @@ class OwnMessageCard extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 10,
                   right: 60,
                   top: 5,
@@ -49,10 +49,10 @@ class OwnMessageCard extends StatelessWidget {
                         color: Colors.grey[600],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.done_all,
                       size: 20,
                     ),
