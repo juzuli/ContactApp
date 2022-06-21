@@ -7,13 +7,14 @@ class AuthRepository {
     return userCredential;
   }
 
-  registerWithEmailPassword(
-    String email,
-    String password,
-  ) async {
+  registerWithEmailPassword(String email, String password) async {
     UserCredential userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     //TODO Update phone number
     return userCredential;
+  }
+
+  signInWithGoogle(){
+
   }
 }

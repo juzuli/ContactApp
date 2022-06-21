@@ -32,7 +32,8 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create a new account'),
+        title: const Text(Strings.createANewAccount),
+        elevation: 0,
       ),
       body: Form(
           key: _formKey,
@@ -46,15 +47,18 @@ class _SignupPageState extends State<SignupPage> {
                   TextFormField(
                     controller: _nameController,
                     keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: const Icon(Icons.person_outline),
                       labelText: Strings.name,
                       hintText: Strings.enterYourName,
                     ),
                     inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter name';
+                        return Strings.pleaseEnterName;
                       } else {
                         return null;
                       }
@@ -64,27 +68,33 @@ class _SignupPageState extends State<SignupPage> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.email),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: const Icon(Icons.email_outlined),
                       labelText: Strings.email,
                       hintText: Strings.enterYourEmail,
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter email';
+                        return Strings.pleaseEnterEmail;
                       }
                       if (emailRegex.hasMatch(value)) {
                         return null;
                       }
-                      return 'Please enter valid email';
+                      return Strings.pleaseEnterValidEmail;
                     },
                   ),
                   const SizedBox(height: 30.0),
                   TextFormField(
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.phone),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: const Icon(Icons.phone_outlined),
                       labelText: Strings.phone,
                       hintText: Strings.enterYourPhone,
                     ),
@@ -94,12 +104,12 @@ class _SignupPageState extends State<SignupPage> {
                     ],
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter phone number';
+                        return Strings.pleaseEnterPhoneNumber;
                       }
                       if (phoneRegex.hasMatch(value)) {
                         return null;
                       }
-                      return "Please enter a valid phone number";
+                      return Strings.pleaseEnterValidPhoneNumber;
                     },
                   ),
                   const SizedBox(height: 30.0),
@@ -107,14 +117,17 @@ class _SignupPageState extends State<SignupPage> {
                     key: _passwordFieldKey,
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.security),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: const Icon(Icons.key_outlined),
                       labelText: Strings.password,
                       hintText: Strings.enterYourPassword,
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter password';
+                        return Strings.pleaseEnterPassword;
                       }
                       return null;
                     },
@@ -123,17 +136,20 @@ class _SignupPageState extends State<SignupPage> {
                   TextFormField(
                     controller: _confirmPasswordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.compare),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: const Icon(Icons.key_outlined),
                       labelText: Strings.conformPassword,
                       hintText: Strings.enterYourConformPassword,
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Password is required';
+                        return Strings.passwordIsRequired;
                       }
                       if (value != _passwordFieldKey.currentState!.value) {
-                        return 'Password do not match';
+                        return Strings.passwordDoNotMatch;
                       }
                       return null;
                     },
@@ -147,29 +163,32 @@ class _SignupPageState extends State<SignupPage> {
                           MaterialPageRoute(
                               builder: (context) => const DashboardPage()));
                     } else if (state is AuthenticationLoadError) {
-                      Fluttertoast.showToast(msg: "Sign_up failed");
+                      Fluttertoast.showToast(msg: Strings.signUpFailed);
                     }
                   }, builder: (context, state) {
                     if (state is AuthenticationLoading) {
                       return const CircularProgressIndicator();
                     } else {
-                      return ElevatedButton(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                          child: Text(
-                            Strings.register.toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: ElevatedButton(
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                            child: Text(
+                              Strings.register,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
                           ),
+                          onPressed: () {
+                            String email = _emailController.text.trim();
+                            String password = _passwordController.text.trim();
+                            BlocProvider.of<AuthenticationCubit>(context)
+                                .registerWithEmailPassword(email, password);
+                          },
                         ),
-                        onPressed: () {
-                          String email = _emailController.text.trim();
-                          String password = _passwordController.text.trim();
-                          BlocProvider.of<AuthenticationCubit>(context)
-                              .registerWithEmailPassword(email, password);
-                        },
                       );
                     }
                   }),
