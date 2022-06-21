@@ -1,3 +1,4 @@
+import 'package:contact_app/src/constants/strings.dart';
 import 'package:contact_app/src/pages/camera_screen.dart';
 import 'package:contact_app/src/pages/chat_page.dart';
 import 'package:contact_app/src/pages/contact_page.dart';
@@ -34,24 +35,27 @@ class _DashboardPageState extends State<DashboardPage> {
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.camera_alt_outlined,
+              icon: Icon(
+                Icons.camera_alt_outlined,
               ),
-              label: 'Camera'
+              label: Strings.camera),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            backgroundColor: Colors.black,
+            label: Strings.home,
           ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              backgroundColor: Colors.black,
-              label: "Home"),
+            icon: Icon(Icons.chat_bubble),
+            backgroundColor: Colors.black,
+            label: Strings.chat,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble),
-              backgroundColor: Colors.black,
-              label: "Chat"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              backgroundColor: Colors.black,
-              label: "Profile"),
+            icon: Icon(Icons.account_circle_outlined),
+            backgroundColor: Colors.black,
+            label: Strings.profile,
+          ),
         ],
       ),
     );

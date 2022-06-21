@@ -28,12 +28,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   registerWithEmailPassword(String email, String password,) async {
     emit(AuthenticationLoading());
     try {
-      UserCredential userCredential = await _authenticationRepository
-          .registerWithEmailPassword(email, password);
-      if (userCredential == null) {
-        emit(AuthenticationLoadError());
-      } else {
+      UserCredential userCredential = await _authenticationRepository.registerWithEmailPassword(email, password);
+      if (userCredential != null) {
         emit(AuthenticationSuccess(userCredential));
+      } else {
+        emit(AuthenticationLoadError());
       }
     } catch (ex) {
       //showErrorMessage(ex.toString());

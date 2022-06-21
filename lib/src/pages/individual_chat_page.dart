@@ -1,3 +1,4 @@
+import 'package:contact_app/src/constants/strings.dart';
 import 'package:contact_app/src/custom_ui/own_message_card.dart';
 import 'package:contact_app/src/custom_ui/reply_card.dart';
 import 'package:contact_app/src/model/chat_model.dart';
@@ -93,28 +94,28 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                     )),
                 PopupMenuButton(
                     itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            child: Text("View contact"),
+                           const PopupMenuItem(
+                            child: Text(Strings.viewContacts),
                             value: 1,
                           ),
                           const PopupMenuItem(
-                            child: Text("Media,links,and docs"),
+                            child: Text(Strings.mediaLinksAndDocs),
                             value: 2,
                           ),
                           const PopupMenuItem(
-                            child: Text("Search"),
+                            child: Text(Strings.search),
                             value: 3,
                           ),
                           const PopupMenuItem(
-                            child: Text("Mute notifications"),
+                            child: Text(Strings.muteNotifications),
                             value: 4,
                           ),
                           const PopupMenuItem(
-                            child: Text("Wallpaper"),
+                            child: Text(Strings.wallpaper),
                             value: 4,
                           ),
                           const PopupMenuItem(
-                            child: Text("More"),
+                            child: Text(Strings.more),
                             value: 5,
                           ),
                         ]),
@@ -130,7 +131,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                   height: MediaQuery.of(context).size.height-180,
                   child: ListView(
                     shrinkWrap: true,
-                    children: [
+                    children: const [
                       OwnMessageCard(),
                       ReplyCard(),
                       OwnMessageCard(),
@@ -174,7 +175,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: const EdgeInsets.all(5),
-                              hintText: 'Type a message',
+                              hintText: Strings.typeAMessage,
                               prefixIcon: IconButton(
                                 onPressed: () {},
                                 icon: const Icon(Icons.emoji_emotions),
@@ -237,12 +238,12 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
             spacing: 40,
             runSpacing: 25,
             children: [
-              iconCreation(Icons.insert_drive_file, Colors.indigo, 'Document'),
-              iconCreation(Icons.camera_alt, Colors.pink, 'Camera'),
-              iconCreation(Icons.insert_photo, Colors.purple, 'Gallery'),
-              iconCreation(Icons.headset, Colors.deepOrange, 'Audio'),
-              iconCreation(Icons.location_pin, Colors.green, 'Location'),
-              iconCreation(Icons.person, Colors.blue, 'Contact'),
+              iconCreation(Icons.insert_drive_file, Colors.indigo, Strings.document),
+              iconCreation(Icons.camera_alt, Colors.pink, Strings.camera),
+              iconCreation(Icons.insert_photo, Colors.purple, Strings.gallery),
+              iconCreation(Icons.headset, Colors.deepOrange, Strings.audio),
+              iconCreation(Icons.location_pin, Colors.green, Strings.location),
+              iconCreation(Icons.person, Colors.blue, Strings.contact),
             ],
           ),
         ),
