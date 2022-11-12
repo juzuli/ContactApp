@@ -1,7 +1,9 @@
 import 'package:contact_app/src/custom_ui/contact_card.dart';
-import 'package:contact_app/src/model/chat_model.dart';
 import 'package:contact_app/src/pages/custom_search_delegate.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -11,26 +13,29 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  bool isLoading = true;
+  List<Contact> contacts = [];
+
+  @override
+  void initState() {
+    getAllContacts();
+    super.initState();
+  }
+
+  getAllContacts ()async{
+    PermissionStatus permissionStatus = await Permission.contacts.request();
+    if (permissionStatus.isGranted){
+      List<Contact> contactsTemp = await ContactsService.getContacts();
+     setState(() {
+       contacts = contactsTemp;
+       isLoading = false;
+     });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    List<ChatModel> contacts=[
-      ChatModel(
-        name: 'juzuli',
-        status: 'Flutter developer'
-      ),
-      ChatModel(
-        name: 'Dipesh',
-        status: 'Flutter developer'
-      ),
-      ChatModel(
-          name: 'Deepak',
-          status: 'Flutter developer'
-      ),
-      ChatModel(
-          name: 'Backershan',
-          status: 'Flutter developer'
-      ),
-    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -73,11 +78,15 @@ class _ContactPageState extends State<ContactPage> {
         onPressed: () {},
         child: const Icon(Icons.person_add),
       ),
-      body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context, index) {
-          return ContactCard(contacts: contacts[index],);
-        },
+      body: Visibility(
+         visible: !isLoading,
+        replacement: const Center(child: CupertinoActivityIndicator(),),
+        child: ListView.builder(
+          itemCount: contacts.length,
+          itemBuilder: (context, index) {
+            return ContactCard(contacts: contacts[index],);
+          },
+        ),
       ),
     );
   }
